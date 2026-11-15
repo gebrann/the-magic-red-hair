@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://3bfn74f5hpec"]
+
+[ext_resource type="Script" uid="uid://b0joclqwsog3c" path="res://scripts/touch_controls.gd" id="1_tc"]
+[ext_resource type="Texture2D" uid="uid://djwat2ablvuwv" path="res://assets/arrow_down.png" id="arrow_down"]
+[ext_resource type="Texture2D" uid="uid://dj5sj3grlpigu" path="res://assets/arrow_down_pressed.png" id="arrow_down_pressed"]
+[ext_resource type="Texture2D" uid="uid://dhyvydxvj3hpj" path="res://assets/arrow_left.png" id="arrow_left"]
+[ext_resource type="Texture2D" uid="uid://b3hteoac5v61e" path="res://assets/arrow_left_pressed.png" id="arrow_left_pressed"]
+[ext_resource type="Texture2D" uid="uid://dnvvn2vkmba3f" path="res://assets/arrow_right.png" id="arrow_right"]
+[ext_resource type="Texture2D" uid="uid://dk34qoxewvfjx" path="res://assets/arrow_right_pressed.png" id="arrow_right_pressed"]
+[ext_resource type="Texture2D" uid="uid://c3080qm8ch0s5" path="res://assets/arrow_up.png" id="arrow_up"]
+[ext_resource type="Texture2D" uid="uid://fb6m6ccsg6el" path="res://assets/arrow_up_pressed.png" id="arrow_up_pressed"]
+[ext_resource type="Texture2D" uid="uid://dd3i83qe4q3vh" path="res://assets/btn_cancel.png" id="btn_cancel"]
+[ext_resource type="Texture2D" uid="uid://cneeajvtkk7wf" path="res://assets/btn_cancel_pressed.png" id="btn_cancel_pressed"]
+[ext_resource type="Texture2D" uid="uid://ymhl2hohpkoy" path="res://assets/btn_interact.png" id="btn_interact"]
+[ext_resource type="Texture2D" uid="uid://8om1bp4s5yl7" path="res://assets/btn_interact_pressed.png" id="btn_interact_pressed"]
+
+[node name="TouchControls" type="CanvasLayer" unique_id=1199442773]
+layer = 10
+script = ExtResource("1_tc")
+
+[node name="Up" type="TouchScreenButton" parent="." unique_id=1072722972]
+modulate = Color(1, 1, 1, 0.8)
+position = Vector2(77, 322.75)
+scale = Vector2(1.5, 1.5)
+texture_normal = ExtResource("arrow_up")
+texture_pressed = ExtResource("arrow_up_pressed")
+passby_press = true
+action = "move_up"
+
+[node name="Down" type="TouchScreenButton" parent="." unique_id=2082641804]
+modulate = Color(1, 1, 1, 0.8)
+position = Vector2(77, 466.75)
+scale = Vector2(1.5, 1.5)
+texture_normal = ExtResource("arrow_down")
+texture_pressed = ExtResource("arrow_down_pressed")
+passby_press = true
+action = "move_down"
+
+[node name="Left" type="TouchScreenButton" parent="." unique_id=464378361]
+modulate = Color(1, 1, 1, 0.8)
+position = Vector2(2.75, 397)
+scale = Vector2(1.5, 1.5)
+texture_normal = ExtResource("arrow_left")
+texture_pressed = ExtResource("arrow_left_pressed")
+passby_press = true
+action = "move_left"
+
+[node name="Right" type="TouchScreenButton" parent="." unique_id=507220069]
+modulate = Color(1, 1, 1, 0.8)
+position = Vector2(146.75, 397)
+scale = Vector2(1.5, 1.5)
+texture_normal = ExtResource("arrow_right")
+texture_pressed = ExtResource("arrow_right_pressed")
+passby_press = true
+action = "move_right"
+
+[node name="Interact" type="TouchScreenButton" parent="." unique_id=916440121]
+modulate = Color(1, 1, 1, 0.8)
+position = Vector2(854, 404)
+scale = Vector2(3, 3)
+texture_normal = ExtResource("btn_interact")
+texture_pressed = ExtResource("btn_interact_pressed")
+passby_press = true
+action = "interact"
+
+[node name="Cancel" type="TouchScreenButton" parent="." unique_id=2113487543]
+modulate = Color(1, 1, 1, 0.8)
+position = Vector2(774, 459)
+scale = Vector2(3, 3)
+texture_normal = ExtResource("btn_cancel")
+texture_pressed = ExtResource("btn_cancel_pressed")
+passby_press = true
+action = "cancel"

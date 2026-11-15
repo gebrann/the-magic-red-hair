@@ -1,0 +1,141 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://scripts/library.gd" id="1_lib"]
+[ext_resource type="Script" path="res://scripts/interactable.gd" id="2_inter"]
+[ext_resource type="Texture2D" path="res://assets/library.png" id="3_map"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://scenes/touch_controls.tscn" id="5_touch"]
+[ext_resource type="Texture2D" path="res://assets/skeleton.png" id="6_skeleton"]
+
+[sub_resource type="RectangleShape2D" id="RectShape_lib0"]
+size = Vector2(936, 44)
+
+[sub_resource type="RectangleShape2D" id="RectShape_lib1"]
+size = Vector2(252, 304)
+
+[sub_resource type="RectangleShape2D" id="RectShape_lib2"]
+size = Vector2(936, 184)
+
+[sub_resource type="RectangleShape2D" id="RectShape_exit"]
+size = Vector2(240, 20)
+
+[sub_resource type="RectangleShape2D" id="RectShape_book"]
+size = Vector2(150, 100)
+
+[sub_resource type="RectangleShape2D" id="RectShape_skeleton"]
+size = Vector2(120, 190)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialog"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+
+[node name="Library" type="Node2D"]
+script = ExtResource("1_lib")
+
+[node name="Map" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("3_map")
+centered = false
+
+[node name="WalkAreas" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
+
+[node name="BarisAtas" type="CollisionShape2D" parent="WalkAreas"]
+position = Vector2(480, 294)
+shape = SubResource("RectShape_lib0")
+
+[node name="LorongTengah" type="CollisionShape2D" parent="WalkAreas"]
+position = Vector2(492, 424)
+shape = SubResource("RectShape_lib1")
+
+[node name="LantaiBawah" type="CollisionShape2D" parent="WalkAreas"]
+position = Vector2(480, 652)
+shape = SubResource("RectShape_lib2")
+
+[node name="Exit" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="ExitZone" type="CollisionShape2D" parent="Exit"]
+position = Vector2(480, 736)
+shape = SubResource("RectShape_exit")
+
+[node name="BlueBook" type="Area2D" parent="." groups=["interactable"]]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("2_inter")
+text = "she has a pet here. Its name is vorgrath"
+
+[node name="BookZone" type="CollisionShape2D" parent="BlueBook"]
+position = Vector2(750, 535)
+shape = SubResource("RectShape_book")
+
+[node name="SkeletonEncounter" type="Area2D" parent="." groups=["interactable"]]
+position = Vector2(480, 430)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("2_inter")
+text = "* Skeleton berdiri diam. Tulang-tulangnya bergetar pelan."
+
+[node name="Sprite" type="Sprite2D" parent="SkeletonEncounter"]
+position = Vector2(0, -38)
+scale = Vector2(0.23, 0.23)
+texture = ExtResource("6_skeleton")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SkeletonEncounter"]
+shape = SubResource("RectShape_skeleton")
+
+[node name="Player" parent="." node_paths=PackedStringArray("walk_areas") instance=ExtResource("4_player")]
+position = Vector2(480, 680)
+walk_areas = NodePath("../WalkAreas")
+
+[node name="Camera" type="Camera2D" parent="Player"]
+position = Vector2(0, -40)
+limit_left = 0
+limit_top = 0
+limit_right = 960
+limit_bottom = 747
+
+[node name="DialogLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="DialogBox" type="Panel" parent="DialogLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 230.0
+offset_top = 392.0
+offset_right = 730.0
+offset_bottom = 516.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dialog")
+
+[node name="Text" type="RichTextLabel" parent="DialogLayer/DialogBox"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 14.0
+offset_right = 480.0
+offset_bottom = 110.0
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+scroll_active = false
+
+[node name="Prompt" type="Label" parent="DialogLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 330.0
+offset_top = 24.0
+offset_right = 630.0
+offset_bottom = 60.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 26
+text = "[A]  periksa"
+horizontal_alignment = 1
+
+[node name="TouchControls" parent="." instance=ExtResource("5_touch")]

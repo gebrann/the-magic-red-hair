@@ -1,0 +1,281 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle.gd" id="1_battle"]
+[ext_resource type="Script" path="res://scripts/hazard_layer.gd" id="2_haz"]
+[ext_resource type="Texture2D" path="res://assets/reyon.png" id="3_reyon"]
+[ext_resource type="Texture2D" path="res://assets/soul.png" id="4_soul"]
+[ext_resource type="Texture2D" path="res://assets/hp_bar.png" id="5_hp"]
+[ext_resource type="Texture2D" path="res://assets/btn_fight.png" id="6_fight"]
+[ext_resource type="Texture2D" path="res://assets/btn_act.png" id="7_act"]
+[ext_resource type="Texture2D" path="res://assets/btn_mercy.png" id="8_mercy"]
+[ext_resource type="PackedScene" path="res://scenes/touch_controls.tscn" id="9_touch"]
+[ext_resource type="AudioStream" path="res://assets/skeleton_voice.mp3" id="10_voice"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_box"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_frame"]
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+
+[node name="Battle" type="Node2D"]
+script = ExtResource("1_battle")
+
+[node name="Background" type="ColorRect" parent="."]
+z_index = -10
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+color = Color(0, 0, 0, 1)
+
+[node name="Stage" type="Node2D" parent="."]
+position = Vector2(160, 30)
+
+[node name="Enemy" type="Sprite2D" parent="Stage"]
+position = Vector2(320, 115)
+scale = Vector2(4, 4)
+texture = ExtResource("3_reyon")
+
+[node name="EnemyHPBar" type="ProgressBar" parent="Stage"]
+visible = false
+offset_left = 440.0
+offset_top = 24.0
+offset_right = 540.0
+offset_bottom = 36.0
+max_value = 15.0
+value = 15.0
+show_percentage = false
+
+[node name="WhipFx" type="Node2D" parent="Stage"]
+visible = false
+z_index = 2
+
+[node name="Outer" type="Line2D" parent="Stage/WhipFx"]
+points = PackedVector2Array(250, 40, 390, 200)
+width = 8.0
+default_color = Color(1, 1, 1, 1)
+
+[node name="Inner" type="Line2D" parent="Stage/WhipFx"]
+points = PackedVector2Array(250, 40, 390, 200)
+width = 3.0
+default_color = Color(0.9, 0.1, 0.1, 1)
+
+[node name="Box" type="Panel" parent="Stage"]
+offset_left = 40.0
+offset_top = 235.0
+offset_right = 600.0
+offset_bottom = 365.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_box")
+
+[node name="Message" type="RichTextLabel" parent="Stage/Box"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 14.0
+offset_right = 540.0
+offset_bottom = 120.0
+theme_override_font_sizes/normal_font_size = 22
+text = "* Reyon menghalangi jalanmu!"
+scroll_active = false
+
+[node name="ActMenu" type="Control" parent="Stage/Box"]
+visible = false
+anchors_preset = 0
+
+[node name="Item0" type="Label" parent="Stage/Box/ActMenu"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 14.0
+offset_right = 360.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "* Check"
+
+[node name="Item1" type="Label" parent="Stage/Box/ActMenu"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 56.0
+offset_right = 360.0
+offset_bottom = 92.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "* Talk"
+
+[node name="FightBar" type="Control" parent="Stage"]
+visible = false
+anchors_preset = 0
+
+[node name="Bar" type="ColorRect" parent="Stage/FightBar"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 262.0
+offset_right = 580.0
+offset_bottom = 332.0
+color = Color(0.15, 0.15, 0.15, 1)
+
+[node name="MidLine" type="ColorRect" parent="Stage/FightBar"]
+layout_mode = 0
+offset_left = 319.0
+offset_top = 262.0
+offset_right = 321.0
+offset_bottom = 332.0
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Frame" type="Panel" parent="Stage/FightBar"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 262.0
+offset_right = 580.0
+offset_bottom = 332.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_frame")
+
+[node name="Cursor" type="ColorRect" parent="Stage/FightBar"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 254.0
+offset_right = 64.0
+offset_bottom = 340.0
+color = Color(1, 1, 1, 1)
+
+[node name="Hint" type="Label" parent="Stage/FightBar"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 236.0
+offset_right = 400.0
+offset_bottom = 258.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "Tekan interact tepat waktu!"
+
+[node name="Hazards" type="Node2D" parent="Stage"]
+z_index = 2
+script = ExtResource("2_haz")
+
+[node name="Soul" type="Sprite2D" parent="Stage"]
+z_index = 3
+position = Vector2(320, 300)
+scale = Vector2(3, 3)
+texture = ExtResource("4_soul")
+
+[node name="Hud" type="Node2D" parent="Stage"]
+
+[node name="NameLabel" type="Label" parent="Stage/Hud"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 386.0
+offset_right = 100.0
+offset_bottom = 420.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "LIN"
+
+[node name="HPBar" type="TextureRect" parent="Stage/Hud"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 380.0
+offset_right = 154.0
+offset_bottom = 398.0
+scale = Vector2(3, 3)
+texture = ExtResource("5_hp")
+
+[node name="Lost" type="ColorRect" parent="Stage/Hud/HPBar"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 4.0
+offset_right = 52.0
+offset_bottom = 14.0
+color = Color(1, 1, 1, 1)
+
+[node name="HPLabel" type="Label" parent="Stage/Hud"]
+layout_mode = 0
+offset_left = 276.0
+offset_top = 386.0
+offset_right = 400.0
+offset_bottom = 420.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "20 / 20"
+
+[node name="Menu" type="Node2D" parent="Stage"]
+
+[node name="FightBtn" type="TextureRect" parent="Stage/Menu"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 440.0
+offset_right = 205.0
+offset_bottom = 496.0
+texture = ExtResource("6_fight")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ActBtn" type="TextureRect" parent="Stage/Menu"]
+layout_mode = 0
+offset_left = 245.0
+offset_top = 440.0
+offset_right = 395.0
+offset_bottom = 496.0
+texture = ExtResource("7_act")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MercyBtn" type="TextureRect" parent="Stage/Menu"]
+layout_mode = 0
+offset_left = 435.0
+offset_top = 440.0
+offset_right = 585.0
+offset_bottom = 496.0
+texture = ExtResource("8_mercy")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+layer = 8
+visible = false
+
+[node name="Dim" type="ColorRect" parent="GameOver"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 960.0
+offset_bottom = 540.0
+color = Color(0, 0, 0, 0.85)
+
+[node name="Title" type="Label" parent="GameOver"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 0.0
+offset_top = 190.0
+offset_right = 960.0
+offset_bottom = 270.0
+theme_override_colors/font_color = Color(0.9, 0.1, 0.1, 1)
+theme_override_font_sizes/font_size = 56
+horizontal_alignment = 1
+text = "BOUNCE BACK!"
+
+[node name="Hint" type="Label" parent="GameOver"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 0.0
+offset_top = 290.0
+offset_right = 960.0
+offset_bottom = 330.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+text = "Tekan interact untuk bangkit lagi"
+
+[node name="SkeletonVoice" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_voice")
+volume_db = -3.0
+
+[node name="TouchControls" parent="." instance=ExtResource("9_touch")]

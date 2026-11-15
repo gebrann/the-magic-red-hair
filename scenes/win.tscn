@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/win.gd" id="1_win"]
+[ext_resource type="Texture2D" path="res://assets/soul.png" id="2_soul"]
+
+[node name="Win" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_win")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_top = 150.0
+offset_right = 960.0
+offset_bottom = 310.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.49, 0.96, 0.93, 1)
+theme_override_font_sizes/font_size = 150
+text = "WIN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Heart" type="Sprite2D" parent="."]
+position = Vector2(480, 350)
+scale = Vector2(5, 5)
+texture = ExtResource("2_soul")
+
+[node name="Hint" type="Label" parent="."]
+layout_mode = 0
+offset_top = 450.0
+offset_right = 960.0
+offset_bottom = 490.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 20
+text = "Tekan interact / sentuh layar untuk kembali ke menu"
+horizontal_alignment = 1
+
+[node name="TapArea" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+focus_mode = 0
+flat = true

@@ -1,0 +1,140 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_menu"]
+[ext_resource type="Texture2D" path="res://assets/menu_title.png" id="2_title"]
+[ext_resource type="Texture2D" path="res://assets/soul.png" id="3_soul"]
+[ext_resource type="Texture2D" path="res://assets/menu_btn_kredit.png" id="menu_btn_kredit"]
+[ext_resource type="Texture2D" path="res://assets/menu_btn_continue.png" id="menu_btn_continue"]
+[ext_resource type="Texture2D" path="res://assets/menu_btn_play.png" id="menu_btn_play"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_credits"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Title" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 237.5
+offset_top = 8.0
+offset_right = 722.5
+offset_bottom = 367.0
+mouse_filter = 2
+texture = ExtResource("2_title")
+
+[node name="Kredit" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 63
+offset_top = 402.5
+offset_right = 277
+offset_bottom = 507.5
+focus_mode = 0
+texture_normal = ExtResource("menu_btn_kredit")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Continue" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 373
+offset_top = 417
+offset_right = 587
+offset_bottom = 493
+focus_mode = 0
+texture_normal = ExtResource("menu_btn_continue")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Play" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 697.5
+offset_top = 412.5
+offset_right = 882.5
+offset_bottom = 497.5
+focus_mode = 0
+texture_normal = ExtResource("menu_btn_play")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Soul" type="Sprite2D" parent="."]
+position = Vector2(100, 455)
+scale = Vector2(3, 3)
+texture = ExtResource("3_soul")
+
+[node name="Credits" type="CanvasLayer" parent="."]
+layer = 6
+visible = false
+
+[node name="CloseArea" type="Button" parent="Credits"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 960.0
+offset_bottom = 540.0
+focus_mode = 0
+flat = true
+
+[node name="Dim" type="ColorRect" parent="Credits"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 960.0
+offset_bottom = 540.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.88)
+
+[node name="Panel" type="Panel" parent="Credits"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 180.0
+offset_top = 90.0
+offset_right = 780.0
+offset_bottom = 450.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_credits")
+
+[node name="Text" type="Label" parent="Credits/Panel"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 580.0
+offset_bottom = 300.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "KREDIT
+
+Developer: Shandy Aditya pramana
+Sound: Mohammad Idlan Gibran
+Ide : Rafa Diandra Refanda
+Game make on GODOT4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hint" type="Label" parent="Credits/Panel"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 310.0
+offset_right = 580.0
+offset_bottom = 345.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 18
+text = "Tekan interact / sentuh layar untuk kembali"
+horizontal_alignment = 1

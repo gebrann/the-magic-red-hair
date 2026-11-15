@@ -1,0 +1,125 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://scripts/overworld.gd" id="1_ow"]
+[ext_resource type="Texture2D" path="res://assets/map_dark_garden.png" id="2_map"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://scenes/reyon.tscn" id="4_reyon"]
+[ext_resource type="PackedScene" path="res://scenes/touch_controls.tscn" id="5_touch"]
+
+[sub_resource type="RectangleShape2D" id="RectShape_walk0"]
+size = Vector2(177, 162)
+
+[sub_resource type="RectangleShape2D" id="RectShape_walk1"]
+size = Vector2(330, 126)
+
+[sub_resource type="RectangleShape2D" id="RectShape_walk2"]
+size = Vector2(258, 36)
+
+[sub_resource type="RectangleShape2D" id="RectShape_walk3"]
+size = Vector2(258, 39)
+
+[sub_resource type="RectangleShape2D" id="RectShape_walk4"]
+size = Vector2(702, 57)
+
+[sub_resource type="RectangleShape2D" id="RectShape_walk5"]
+size = Vector2(180, 198)
+
+[sub_resource type="RectangleShape2D" id="RectShape_block0"]
+size = Vector2(204, 117)
+
+[sub_resource type="RectangleShape2D" id="RectShape_door"]
+size = Vector2(177, 28)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialog"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+
+[node name="Overworld" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_ow")
+
+[node name="Map" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("2_map")
+centered = false
+
+[node name="WalkAreas" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
+
+[node name="JalanAtas" type="CollisionShape2D" parent="WalkAreas"]
+position = Vector2(472.5, 93)
+shape = SubResource("RectShape_walk0")
+
+[node name="TengahBadan" type="CollisionShape2D" parent="WalkAreas"]
+position = Vector2(468, 252)
+shape = SubResource("RectShape_walk1")
+
+[node name="TengahAtas" type="CollisionShape2D" parent="WalkAreas"]
+position = Vector2(468, 174)
+shape = SubResource("RectShape_walk2")
+
+[node name="TengahBawah" type="CollisionShape2D" parent="WalkAreas"]
+position = Vector2(468, 331.5)
+shape = SubResource("RectShape_walk3")
+
+[node name="JalanKiriKanan" type="CollisionShape2D" parent="WalkAreas"]
+position = Vector2(471, 259.5)
+shape = SubResource("RectShape_walk4")
+
+[node name="JalanBawah" type="CollisionShape2D" parent="WalkAreas"]
+position = Vector2(468, 435)
+shape = SubResource("RectShape_walk5")
+
+[node name="BlockedAreas" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
+
+[node name="PanelBiru" type="CollisionShape2D" parent="BlockedAreas"]
+position = Vector2(474, 253.5)
+shape = SubResource("RectShape_block0")
+
+[node name="LibraryDoor" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="DoorZone" type="CollisionShape2D" parent="LibraryDoor"]
+position = Vector2(472, 24)
+shape = SubResource("RectShape_door")
+
+[node name="Reyon" parent="." instance=ExtResource("4_reyon")]
+position = Vector2(472, 170)
+
+[node name="Player" parent="." node_paths=PackedStringArray("walk_areas", "blocked_areas") instance=ExtResource("3_player")]
+position = Vector2(468, 504)
+walk_areas = NodePath("../WalkAreas")
+blocked_areas = NodePath("../BlockedAreas")
+
+[node name="DialogLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="DialogBox" type="Panel" parent="DialogLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 230.0
+offset_top = 392.0
+offset_right = 730.0
+offset_bottom = 516.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dialog")
+
+[node name="Text" type="RichTextLabel" parent="DialogLayer/DialogBox"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 14.0
+offset_right = 480.0
+offset_bottom = 110.0
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+scroll_active = false
+
+[node name="TouchControls" parent="." instance=ExtResource("5_touch")]
